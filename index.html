@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173f37">
+  <meta name="description" content="Thế Giới Của Con - câu chuyện nhỏ về trí tò mò, lòng tốt và những điều kỳ diệu quanh ta.">
+  <title>Thế Giới Của Con</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #fffaf0;
+      --muted: #e3e9dc;
+      --leaf: #c5e39d;
+      --sun: #f3d88b;
+      --deep: #173f37;
+      --line: rgb(255 250 240 / 28%);
+      font-family: "Nunito Sans", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-width: 320px;
+      min-height: 100svh;
+      margin: 0;
+      background: var(--deep);
+      color: var(--ink);
+    }
+
+    button { font: inherit; }
+
+    .story {
+      position: relative;
+      display: flex;
+      min-height: 100svh;
+      flex-direction: column;
+      isolation: isolate;
+      overflow: hidden;
+      padding: 26px clamp(20px, 6vw, 88px) 24px;
+    }
+
+    .story__image,
+    .story::after {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+    }
+
+    .story__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: opacity 280ms ease;
+    }
+
+    .story::after {
+      content: "";
+      background: linear-gradient(90deg, rgb(9 35 30 / 84%) 0%, rgb(12 42 34 / 69%) 46%, rgb(12 42 34 / 13%) 100%), linear-gradient(0deg, rgb(9 35 30 / 68%), transparent 38%);
+    }
+
+    .topbar,
+    .story__body,
+    .story__footer {
+      width: min(100%, 1120px);
+      margin-inline: auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .brand__mark {
+      display: grid;
+      width: 38px;
+      aspect-ratio: 1;
+      place-items: center;
+      border: 1px solid rgb(255 250 240 / 52%);
+      border-radius: 50%;
+      color: var(--sun);
+      font-size: 19px;
+    }
+
+    .chapter-count {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .story__body {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      padding-block: 44px 52px;
+    }
+
+    .copy {
+      width: min(100%, 620px);
+      animation: arrive 500ms ease both;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 18px;
+      color: var(--leaf);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 27px;
+      height: 1px;
+      background: var(--leaf);
+      content: "";
+    }
+
+    h1 {
+      max-width: 650px;
+      margin: 0 0 23px;
+      font-family: "DM Serif Display", Georgia, serif;
+      font-size: clamp(42px, 6vw, 76px);
+      font-weight: 400;
+      line-height: 1.02;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+
+    .story__text {
+      max-width: 570px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.85;
+      text-wrap: pretty;
+    }
+
+    .story__text p { margin: 0 0 13px; }
+    .story__text p:last-child { margin-bottom: 0; }
+
+    .story__footer {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 20px 32px;
+    }
+
+    .chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: clamp(12px, 3vw, 32px);
+      min-width: 0;
+      border-top: 1px solid var(--line);
+      padding-top: 17px;
+    }
+
+    .chapter-tab {
+      position: relative;
+      display: flex;
+      min-height: 42px;
+      align-items: center;
+      gap: 9px;
+      border: 0;
+      padding: 0 0 5px;
+      background: transparent;
+      color: rgb(255 250 240 / 65%);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .chapter-tab::after {
+      position: absolute;
+      right: 0;
+      bottom: -1px;
+      left: 0;
+      height: 2px;
+      transform: scaleX(0);
+      transform-origin: left;
+      background: var(--sun);
+      content: "";
+      transition: transform 180ms ease;
+    }
+
+    .chapter-tab[aria-current="step"] { color: var(--ink); }
+    .chapter-tab[aria-current="step"]::after { transform: scaleX(1); }
+
+    .chapter-tab__number {
+      color: var(--leaf);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .arrows { display: flex; gap: 8px; }
+
+    .arrow-button {
+      display: grid;
+      width: 44px;
+      aspect-ratio: 1;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: rgb(12 42 34 / 36%);
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 20px;
+      transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+    }
+
+    .arrow-button:hover:not(:disabled) {
+      border-color: var(--sun);
+      background: var(--sun);
+      color: var(--deep);
+    }
+
+    .arrow-button:disabled { cursor: default; opacity: .35; }
+
+    .about {
+      background: #f2e8cf;
+      color: #173f37;
+      padding: 54px clamp(20px, 6vw, 88px) 60px;
+    }
+
+    .about__inner {
+      display: grid;
+      width: min(100%, 1120px);
+      grid-template-columns: minmax(180px, 1fr) 2fr;
+      align-items: start;
+      gap: 32px;
+      margin-inline: auto;
+    }
+
+    .about__label {
+      margin: 0 0 10px;
+      color: #587354;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .about h2 {
+      margin: 0;
+      font-family: "DM Serif Display", Georgia, serif;
+      font-size: 38px;
+      font-weight: 400;
+      line-height: 1.1;
+    }
+
+    .about__intro {
+      max-width: 620px;
+      margin: 2px 0 0;
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .about__facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px 48px;
+      margin: 22px 0 0;
+    }
+
+    .about__facts div { display: grid; gap: 3px; }
+    .about__facts dt { color: #587354; font-size: 12px; font-weight: 800; }
+    .about__facts dd { margin: 0; font-size: 15px; font-weight: 700; }
+
+    button:focus-visible {
+      outline: 2px solid var(--sun);
+      outline-offset: 4px;
+    }
+
+    @keyframes arrive {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 650px) {
+      .story { padding: 18px 21px 18px; }
+      .story::after { background: linear-gradient(90deg, rgb(9 35 30 / 83%), rgb(12 42 34 / 47%)), linear-gradient(0deg, rgb(9 35 30 / 82%), transparent 65%); }
+      .story__body { align-items: flex-end; padding-block: 55px 34px; }
+      .copy { width: 100%; }
+      h1 { font-size: clamp(42px, 12vw, 60px); }
+      .story__text { font-size: 16px; line-height: 1.72; }
+      .story__footer { grid-template-columns: 1fr; gap: 12px; }
+      .chapter-nav { justify-content: space-between; gap: 8px; }
+      .chapter-tab { gap: 6px; font-size: 12px; }
+      .chapter-tab__number { font-size: 10px; }
+      .arrows { justify-content: flex-end; }
+      .about { padding-block: 38px 44px; }
+      .about__inner { grid-template-columns: 1fr; gap: 18px; }
+      .about h2 { font-size: 34px; }
+      .about__intro { font-size: 16px; }
+      .about__facts { gap: 18px 32px; }
+    }
+
+    @media (max-width: 390px) {
+      .chapter-tab { flex-direction: column; align-items: flex-start; justify-content: center; gap: 1px; }
+      .story__text { font-size: 15px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="story" aria-labelledby="story-title">
+    <img class="story__image" id="scene-image" src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=2200&q=85" alt="Sân bóng xanh rộng dưới bầu trời chiều" fetchpriority="high">
+    <header class="topbar">
+      <div class="brand"><span class="brand__mark" aria-hidden="true">✳</span><span>THẾ GIỚI CỦA CON</span></div>
+      <span class="chapter-count" id="chapter-count" aria-live="polite">01 / 03</span>
+    </header>
+
+    <section class="story__body" aria-live="polite" aria-atomic="true">
+      <article class="copy" id="story-copy">
+        <p class="eyebrow" id="chapter-kicker">Phần đầu</p>
+        <h1 id="story-title">Ước Mơ Trên Sân Cỏ</h1>
+        <div class="story__text" id="story-text">
+          <p>Khôi yêu bóng đá từ ngày được bố dẫn đến xem một trận đấu. Từ hôm ấy, quả bóng cũ trở thành người bạn thân của cậu. Chiều nào làm xong bài tập, Khôi cũng ra sân tập sút bóng cùng các bạn.</p>
+          <p>Cậu mơ một ngày được khoác áo đội bóng của trường. Nhưng Khôi thường sút chệch khung thành và chạy chậm hơn các bạn khác.</p>
+          <p>Dù vậy, mỗi lần quả bóng lăn xa, Khôi lại chạy theo nhặt lên. Cậu tin rằng chỉ cần không bỏ cuộc, mình sẽ tiến bộ.</p>
+        </div>
+      </article>
+    </section>
+
+    <footer class="story__footer">
+      <nav class="chapter-nav" aria-label="Chọn phần câu chuyện">
+        <button class="chapter-tab" type="button" data-chapter="0" aria-current="step"><span class="chapter-tab__number">01</span><span>Phần đầu</span></button>
+        <button class="chapter-tab" type="button" data-chapter="1"><span class="chapter-tab__number">02</span><span>Nội dung</span></button>
+        <button class="chapter-tab" type="button" data-chapter="2"><span class="chapter-tab__number">03</span><span>Phần cuối</span></button>
+      </nav>
+      <div class="arrows" aria-label="Điều hướng câu chuyện">
+        <button class="arrow-button" id="previous" type="button" aria-label="Đọc phần trước" title="Phần trước" disabled>←</button>
+        <button class="arrow-button" id="next" type="button" aria-label="Đọc phần tiếp theo" title="Phần tiếp theo">→</button>
+      </div>
+    </footer>
+  </main>
+
+  <section class="about" aria-labelledby="about-title">
+    <div class="about__inner">
+      <div>
+        <p class="about__label">Người kể chuyện</p>
+        <h2 id="about-title">Mình là Khôi</h2>
+      </div>
+      <div>
+        <p class="about__intro">Mình 10 tuổi và rất thích đá bóng. Đây là câu chuyện mình muốn kể về niềm vui trên sân cỏ, sự cố gắng và tình bạn.</p>
+        <dl class="about__facts">
+          <div><dt>Tuổi</dt><dd>10</dd></div>
+          <div><dt>Sở thích</dt><dd>Đá bóng</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const chapters = [
+      {
+        label: "Phần đầu",
+        title: "Ước Mơ Trên Sân Cỏ",
+        image: "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=2200&q=85",
+        alt: "Sân bóng xanh rộng dưới bầu trời chiều",
+        paragraphs: [
+          "Khôi yêu bóng đá từ ngày được bố dẫn đến xem một trận đấu. Từ hôm ấy, quả bóng cũ trở thành người bạn thân của cậu. Chiều nào làm xong bài tập, Khôi cũng ra sân tập sút bóng cùng các bạn.",
+          "Cậu mơ một ngày được khoác áo đội bóng của trường. Nhưng Khôi thường sút chệch khung thành và chạy chậm hơn các bạn khác.",
+          "Dù vậy, mỗi lần quả bóng lăn xa, Khôi lại chạy theo nhặt lên. Cậu tin rằng chỉ cần không bỏ cuộc, mình sẽ tiến bộ."
+        ]
+      },
+      {
+        label: "Nội dung",
+        title: "Trận đấu không bỏ cuộc",
+        image: "https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&w=2200&q=85",
+        alt: "Các cầu thủ đang chơi bóng trong một trận đấu",
+        paragraphs: [
+          "Mỗi chiều, Khôi đến sân sớm để tập khống chế bóng và chuyền thật chính xác. Huấn luyện viên dạy cậu ngẩng đầu quan sát trước khi chuyền, vì trên sân, chơi cùng đồng đội quan trọng hơn cố gắng một mình.",
+          "Vài tuần sau, Khôi được chọn vào đội bóng của trường. Trong trận đấu đầu tiên, đội cậu bị dẫn trước một bàn. Khôi có cơ hội sút bóng, nhưng cú sút đi chệch khung thành. Cậu thoáng thất vọng và bắt đầu lo mình sẽ làm cả đội thua cuộc.",
+          "Đội trưởng chạy đến động viên: “Không sao đâu Khôi, mình còn thời gian. Cứ chuyền cho nhau nhé!” Khôi bình tĩnh trở lại, nhớ lời huấn luyện viên và quan sát vị trí của các bạn.",
+          "Gần cuối trận, bóng đến chân Khôi. Cậu thấy một đồng đội đang đứng gần khung thành trong tư thế thuận lợi. Thay vì sút một mình, Khôi chuyền bóng thật vừa tầm. Bạn ấy ghi bàn gỡ hòa, cả đội vui mừng chạy đến ôm nhau."
+        ]
+      },
+      {
+        label: "Phần cuối",
+        title: "Niềm vui lớn hơn chiếc cúp",
+        image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=2200&q=85",
+        alt: "Quả bóng nằm trên sân cỏ sau trận đấu",
+        paragraphs: [
+          "Trận đấu kết thúc với tỉ số hòa. Đội của Khôi không giành được chiếc cúp, nhưng ai cũng vui vì đã chơi hết mình và động viên nhau đến phút cuối.",
+          "Trên đường về, Khôi nhận ra mình đã tiến bộ: cậu biết chuyền bóng, tin tưởng đồng đội và không nản lòng khi mắc lỗi.",
+          "Từ hôm đó, Khôi vẫn tiếp tục tập luyện. Cậu hiểu bóng đá không chỉ là ghi bàn hay chiến thắng, mà còn là kiên trì, đoàn kết và cùng nhau tận hưởng niềm vui trên sân cỏ."
+        ]
+      }
+    ];
+
+    const title = document.querySelector("#story-title");
+    const kicker = document.querySelector("#chapter-kicker");
+    const text = document.querySelector("#story-text");
+    const image = document.querySelector("#scene-image");
+    const count = document.querySelector("#chapter-count");
+    const previous = document.querySelector("#previous");
+    const next = document.querySelector("#next");
+    const tabs = [...document.querySelectorAll(".chapter-tab")];
+    const copy = document.querySelector("#story-copy");
+    let currentChapter = 0;
+
+    function showChapter(index) {
+      currentChapter = Math.max(0, Math.min(index, chapters.length - 1));
+      const chapter = chapters[currentChapter];
+
+      title.textContent = chapter.title;
+      kicker.textContent = chapter.label;
+      text.replaceChildren(...chapter.paragraphs.map((paragraph) => {
+        const element = document.createElement("p");
+        element.textContent = paragraph;
+        return element;
+      }));
+      image.src = chapter.image;
+      image.alt = chapter.alt;
+      count.textContent = `${String(currentChapter + 1).padStart(2, "0")} / ${String(chapters.length).padStart(2, "0")}`;
+      previous.disabled = currentChapter === 0;
+      next.disabled = currentChapter === chapters.length - 1;
+      tabs.forEach((tab, tabIndex) => {
+        if (tabIndex === currentChapter) tab.setAttribute("aria-current", "step");
+        else tab.removeAttribute("aria-current");
+      });
+
+      copy.style.animation = "none";
+      requestAnimationFrame(() => { copy.style.animation = ""; });
+    }
+
+    tabs.forEach((tab) => tab.addEventListener("click", () => showChapter(Number(tab.dataset.chapter))));
+    previous.addEventListener("click", () => showChapter(currentChapter - 1));
+    next.addEventListener("click", () => showChapter(currentChapter + 1));
+  </script>
+</body>
+</html>
