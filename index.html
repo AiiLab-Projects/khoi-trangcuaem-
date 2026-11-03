@@ -6,9 +6,6 @@
   <meta name="theme-color" content="#173f37">
   <meta name="description" content="Thế Giới Của Con - câu chuyện nhỏ về trí tò mò, lòng tốt và những điều kỳ diệu quanh ta.">
   <title>Thế Giới Của Con</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       color-scheme: dark;
@@ -18,10 +15,12 @@
       --sun: #f3d88b;
       --deep: #173f37;
       --line: rgb(255 250 240 / 28%);
-      font-family: "Nunito Sans", sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
       min-width: 320px;
@@ -138,7 +137,7 @@
     h1 {
       max-width: 650px;
       margin: 0 0 23px;
-      font-family: "DM Serif Display", Georgia, serif;
+      font-family: Arial, Helvetica, sans-serif;
       font-size: clamp(42px, 6vw, 76px);
       font-weight: 400;
       line-height: 1.02;
@@ -253,6 +252,55 @@
 
     .arrows { display: flex; gap: 8px; }
 
+    .story-more {
+      display: inline-flex;
+      grid-column: 1 / -1;
+      align-items: center;
+      gap: 8px;
+      justify-self: start;
+      border: 1px solid var(--sun);
+      border-radius: 24px;
+      padding: 10px 17px;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      background: transparent;
+      cursor: pointer;
+      transition: background 160ms ease, color 160ms ease;
+    }
+
+    .story-more:hover {
+      background: var(--sun);
+      color: var(--deep);
+    }
+
+    .back-to-top {
+      position: fixed;
+      z-index: 2;
+      right: 22px;
+      bottom: 22px;
+      display: grid;
+      width: 48px;
+      aspect-ratio: 1;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: var(--deep);
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 22px;
+      box-shadow: 0 4px 16px rgb(0 0 0 / 24%);
+      transition: background 160ms ease, color 160ms ease;
+    }
+
+    .back-to-top:hover {
+      background: var(--sun);
+      color: var(--deep);
+    }
+
+    .back-to-top[hidden] { display: none; }
+
     .arrow-button {
       display: grid;
       width: 44px;
@@ -301,7 +349,7 @@
 
     .about h2 {
       margin: 0;
-      font-family: "DM Serif Display", Georgia, serif;
+      font-family: Arial, Helvetica, sans-serif;
       font-size: 38px;
       font-weight: 400;
       line-height: 1.1;
@@ -365,7 +413,7 @@
   </style>
 </head>
 <body>
-  <main class="story" aria-labelledby="story-title">
+  <main class="story" id="top" aria-labelledby="story-title">
     <img class="story__image" id="scene-image" src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=2200&q=85" alt="Sân bóng xanh rộng dưới bầu trời chiều" fetchpriority="high">
     <header class="topbar">
       <div class="brand"><span class="brand__mark" aria-hidden="true">✳</span><span>THẾ GIỚI CỦA CON</span></div>
@@ -378,31 +426,29 @@
         <h1 id="story-title">Ước Mơ Trên Sân Cỏ</h1>
         <div class="story__text" id="story-text">
           <p>Khôi yêu bóng đá từ ngày được bố dẫn đến xem một trận đấu. Từ hôm ấy, quả bóng cũ trở thành người bạn thân của cậu. Chiều nào làm xong bài tập, Khôi cũng ra sân tập sút bóng cùng các bạn.</p>
-          <p>Cậu mơ một ngày được khoác áo đội bóng của trường. Nhưng Khôi thường sút chệch khung thành và chạy chậm hơn các bạn khác.</p>
-          <p>Dù vậy, mỗi lần quả bóng lăn xa, Khôi lại chạy theo nhặt lên. Cậu tin rằng chỉ cần không bỏ cuộc, mình sẽ tiến bộ.</p>
+          <p hidden>Cậu mơ một ngày được khoác áo đội bóng của trường. Nhưng Khôi thường sút chệch khung thành và chạy chậm hơn các bạn khác.</p>
+          <p hidden>Dù vậy, mỗi lần quả bóng lăn xa, Khôi lại chạy theo nhặt lên. Cậu tin rằng chỉ cần không bỏ cuộc, mình sẽ tiến bộ.</p>
         </div>
       </article>
     </section>
 
     <footer class="story__footer">
-      <div class="story__orders" role="group" aria-label="Chọn thứ tự kể chuyện">
-        <p class="story__orders-label">Thử hai cách xếp chuyện:</p>
-        <button class="story-order" type="button" data-order="0" aria-pressed="true">Cách 1 · Theo trình tự</button>
-        <button class="story-order" type="button" data-order="1" aria-pressed="false">Cách 2 · Trận đấu trước</button>
-      </div>
       <nav class="chapter-nav" aria-label="Chọn phần câu chuyện">
-        <button class="chapter-tab" type="button" data-chapter="0" aria-current="step"><span class="chapter-tab__number">01</span><span>Phần đầu</span></button>
-        <button class="chapter-tab" type="button" data-chapter="1"><span class="chapter-tab__number">02</span><span>Nội dung</span></button>
-        <button class="chapter-tab" type="button" data-chapter="2"><span class="chapter-tab__number">03</span><span>Phần cuối</span></button>
+        <button class="chapter-tab" type="button" data-step="0" aria-current="step"><span class="chapter-tab__number">01</span><span>Phần đầu</span></button>
+        <button class="chapter-tab" type="button" data-step="1"><span class="chapter-tab__number">02</span><span>Nội dung</span></button>
+        <button class="chapter-tab" type="button" data-step="2"><span class="chapter-tab__number">03</span><span>Phần cuối</span></button>
       </nav>
       <div class="arrows" aria-label="Điều hướng câu chuyện">
         <button class="arrow-button" id="previous" type="button" aria-label="Đọc phần trước" title="Phần trước" disabled>←</button>
         <button class="arrow-button" id="next" type="button" aria-label="Đọc phần tiếp theo" title="Phần tiếp theo">→</button>
       </div>
+      <button class="story-more" id="story-more" type="button" aria-controls="story-text" aria-expanded="false">
+        <span id="story-more-label">Xem thêm</span><span id="story-more-icon" aria-hidden="true">↓</span>
+      </button>
     </footer>
   </main>
 
-  <section class="about" aria-labelledby="about-title">
+  <section class="about" id="about" aria-labelledby="about-title">
     <div class="about__inner">
       <div>
         <p class="about__label">Người kể chuyện</p>
@@ -417,6 +463,8 @@
       </div>
     </div>
   </section>
+
+  <button class="back-to-top" id="back-to-top" type="button" aria-label="Lên đầu trang" title="Lên đầu trang" hidden>↑</button>
 
   <script>
     const chapters = [
@@ -464,13 +512,12 @@
     const previous = document.querySelector("#previous");
     const next = document.querySelector("#next");
     const chapterNav = document.querySelector(".chapter-nav");
-    const orderButtons = [...document.querySelectorAll(".story-order")];
+    const backToTop = document.querySelector("#back-to-top");
+    const storyMore = document.querySelector("#story-more");
+    const storyMoreLabel = document.querySelector("#story-more-label");
+    const storyMoreIcon = document.querySelector("#story-more-icon");
     const copy = document.querySelector("#story-copy");
-    const orders = [
-      [0, 1, 2],
-      [1, 0, 2]
-    ];
-    let chapterOrder = orders[0];
+    const chapterOrder = [0, 1, 2];
     let currentStep = 0;
 
     function renderTabs() {
@@ -499,11 +546,16 @@
 
       title.textContent = chapter.title;
       kicker.textContent = chapter.label;
-      text.replaceChildren(...chapter.paragraphs.map((paragraph) => {
+      text.replaceChildren(...chapter.paragraphs.map((paragraph, index) => {
         const element = document.createElement("p");
         element.textContent = paragraph;
+        element.hidden = index > 0;
         return element;
       }));
+      storyMore.hidden = chapter.paragraphs.length < 2;
+      storyMore.setAttribute("aria-expanded", "false");
+      storyMoreLabel.textContent = "Xem thêm";
+      storyMoreIcon.textContent = "↓";
       image.src = chapter.image;
       image.alt = chapter.alt;
       count.textContent = `${String(currentStep + 1).padStart(2, "0")} / ${String(chapterOrder.length).padStart(2, "0")}`;
@@ -515,19 +567,27 @@
       requestAnimationFrame(() => { copy.style.animation = ""; });
     }
 
-    orderButtons.forEach((button) => button.addEventListener("click", () => {
-      chapterOrder = orders[Number(button.dataset.order)];
-      orderButtons.forEach((orderButton) => {
-        orderButton.setAttribute("aria-pressed", String(orderButton === button));
-      });
-      showChapter(0);
-    }));
     chapterNav.addEventListener("click", (event) => {
       const tab = event.target.closest(".chapter-tab");
       if (tab) showChapter(Number(tab.dataset.step));
     });
     previous.addEventListener("click", () => showChapter(currentStep - 1));
     next.addEventListener("click", () => showChapter(currentStep + 1));
+    storyMore.addEventListener("click", () => {
+      const expanded = storyMore.getAttribute("aria-expanded") !== "true";
+      text.querySelectorAll("p").forEach((paragraph, index) => {
+        paragraph.hidden = !expanded && index > 0;
+      });
+      storyMore.setAttribute("aria-expanded", String(expanded));
+      storyMoreLabel.textContent = expanded ? "Thu gọn" : "Xem thêm";
+      storyMoreIcon.textContent = expanded ? "↑" : "↓";
+    });
+    window.addEventListener("scroll", () => {
+      backToTop.hidden = window.scrollY < 240;
+    }, { passive: true });
+    backToTop.addEventListener("click", () => {
+      document.querySelector("#top").scrollIntoView({ behavior: "smooth" });
+    });
   </script>
 </body>
 </html>
