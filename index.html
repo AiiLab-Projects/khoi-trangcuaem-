@@ -281,6 +281,55 @@
       padding: 54px clamp(20px, 6vw, 88px) 60px;
     }
 
+    .favorites {
+      background: #f2e8cf;
+      color: #173f37;
+      padding: 48px clamp(20px, 6vw, 88px) 28px;
+    }
+
+    .favorites__inner {
+      width: min(100%, 1120px);
+      margin-inline: auto;
+    }
+
+    .favorites h2 {
+      margin: 0;
+      font-family: "Nunito Sans", sans-serif;
+      font-size: 38px;
+      font-weight: 400;
+      line-height: 1.1;
+    }
+
+    .favorites__list {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin: 24px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .favorites__item {
+      min-height: 130px;
+      border: 1px solid rgb(23 63 55 / 16%);
+      border-radius: 14px;
+      padding: 18px 16px;
+      background: rgb(255 250 240 / 62%);
+    }
+
+    .favorites__number {
+      display: block;
+      margin-bottom: 12px;
+      color: #587354;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .favorites__item strong {
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
     .about__inner {
       display: grid;
       width: min(100%, 1120px);
@@ -348,6 +397,10 @@
       .chapter-tab__number { font-size: 10px; }
       .arrows { justify-content: flex-end; }
       .about { padding-block: 38px 44px; }
+      .favorites { padding-block: 38px 20px; }
+      .favorites h2 { font-size: 34px; }
+      .favorites__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 20px; }
+      .favorites__item { min-height: 112px; padding: 15px 13px; }
       .about__inner { grid-template-columns: 1fr; gap: 18px; }
       .about h2 { font-size: 34px; }
       .about__intro { font-size: 16px; }
@@ -401,6 +454,20 @@
       </div>
     </footer>
   </main>
+
+  <section class="favorites" aria-labelledby="favorites-title">
+    <div class="favorites__inner">
+      <p class="about__label">Một chút về mình</p>
+      <h2 id="favorites-title">5 điều mình thích nhất</h2>
+      <ol class="favorites__list">
+        <li class="favorites__item"><span class="favorites__number">01</span><strong>Đá bóng trên sân cỏ</strong></li>
+        <li class="favorites__item"><span class="favorites__number">02</span><strong>Chơi bóng cùng bạn bè</strong></li>
+        <li class="favorites__item"><span class="favorites__number">03</span><strong>Tập luyện để ngày càng tiến bộ</strong></li>
+        <li class="favorites__item"><span class="favorites__number">04</span><strong>Xem những trận bóng thật hay</strong></li>
+        <li class="favorites__item"><span class="favorites__number">05</span><strong>Chuyền bóng và ăn mừng cùng đồng đội</strong></li>
+      </ol>
+    </div>
+  </section>
 
   <section class="about" aria-labelledby="about-title">
     <div class="about__inner">
