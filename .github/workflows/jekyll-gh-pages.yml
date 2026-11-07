@@ -1,0 +1,43 @@
+name: Deploy Static Web to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+    # Theo dõi mọi thay đổi file trên nhánh main (bao gồm .html, css, js, v.v.)
+    paths:
+      - '**'
+
+  # Cho phép bấm chạy thủ công từ tab Actions khi cần
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Đưa toàn bộ thư mục root chứa các file HTML lên Pages
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
