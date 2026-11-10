@@ -310,12 +310,21 @@
     }
 
     .favorites__item {
+      overflow: hidden;
       min-height: 130px;
       border: 1px solid rgb(23 63 55 / 16%);
       border-radius: 14px;
-      padding: 18px 16px;
       background: rgb(255 250 240 / 62%);
     }
+
+    .favorites__image {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+    }
+
+    .favorites__content { padding: 16px; }
 
     .favorites__number {
       display: block;
@@ -400,7 +409,8 @@
       .favorites { padding-block: 38px 20px; }
       .favorites h2 { font-size: 34px; }
       .favorites__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 20px; }
-      .favorites__item { min-height: 112px; padding: 15px 13px; }
+      .favorites__item { min-height: 0; }
+      .favorites__content { padding: 15px 13px; }
       .about__inner { grid-template-columns: 1fr; gap: 18px; }
       .about h2 { font-size: 34px; }
       .about__intro { font-size: 16px; }
@@ -460,11 +470,41 @@
       <p class="about__label">Một chút về mình</p>
       <h2 id="favorites-title">5 điều mình thích nhất</h2>
       <ol class="favorites__list">
-        <li class="favorites__item"><span class="favorites__number">01</span><strong>Đá bóng trên sân cỏ</strong></li>
-        <li class="favorites__item"><span class="favorites__number">02</span><strong>Chơi bóng cùng bạn bè</strong></li>
-        <li class="favorites__item"><span class="favorites__number">03</span><strong>Tập luyện để ngày càng tiến bộ</strong></li>
-        <li class="favorites__item"><span class="favorites__number">04</span><strong>Xem những trận bóng thật hay</strong></li>
-        <li class="favorites__item"><span class="favorites__number">05</span><strong>Chuyền bóng và ăn mừng cùng đồng đội</strong></li>
+        <li class="favorites__item">
+          <img class="favorites__image" src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&amp;fit=crop&amp;w=600&amp;h=450&amp;q=80" alt="Sân bóng xanh rộng dưới bầu trời chiều" loading="lazy">
+          <div class="favorites__content">
+            <span class="favorites__number">01</span>
+            <strong>Đá bóng trên sân cỏ</strong>
+          </div>
+        </li>
+        <li class="favorites__item">
+          <img class="favorites__image" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&amp;fit=crop&amp;w=600&amp;h=450&amp;q=80" alt="Nhóm bạn vui vẻ ở bên nhau" loading="lazy">
+          <div class="favorites__content">
+            <span class="favorites__number">02</span>
+            <strong>Chơi bóng cùng bạn bè</strong>
+          </div>
+        </li>
+        <li class="favorites__item">
+          <img class="favorites__image" src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&amp;fit=crop&amp;w=600&amp;h=450&amp;q=80" alt="Quả bóng trên sân cỏ trong buổi tập" loading="lazy">
+          <div class="favorites__content">
+            <span class="favorites__number">03</span>
+            <strong>Tập luyện để ngày càng tiến bộ</strong>
+          </div>
+        </li>
+        <li class="favorites__item">
+          <img class="favorites__image" src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&amp;fit=crop&amp;w=600&amp;h=450&amp;q=80" alt="Trận bóng đá đang diễn ra trên sân" loading="lazy">
+          <div class="favorites__content">
+            <span class="favorites__number">04</span>
+            <strong>Xem những trận bóng thật hay</strong>
+          </div>
+        </li>
+        <li class="favorites__item">
+          <img class="favorites__image" src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&amp;fit=crop&amp;w=600&amp;h=450&amp;q=80" alt="Quả bóng nằm trên sân cỏ sau trận đấu" loading="lazy">
+          <div class="favorites__content">
+            <span class="favorites__number">05</span>
+            <strong>Chuyền bóng và ăn mừng cùng đồng đội</strong>
+          </div>
+        </li>
       </ol>
     </div>
   </section>
