@@ -165,45 +165,6 @@
       gap: 20px 32px;
     }
 
-    .story__orders {
-      display: flex;
-      grid-column: 1 / -1;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .story__orders-label {
-      width: 100%;
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .story-order {
-      min-height: 38px;
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 7px 14px;
-      background: rgb(12 42 34 / 36%);
-      color: var(--muted);
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .story-order[aria-pressed="true"] {
-      border-color: var(--sun);
-      background: var(--sun);
-      color: var(--deep);
-    }
-
-    .story-order:focus-visible {
-      outline: 2px solid var(--sun);
-      outline-offset: 4px;
-    }
-
     .chapter-nav {
       display: flex;
       align-items: center;
@@ -448,15 +409,10 @@
     </section>
 
     <footer class="story__footer">
-      <div class="story__orders" role="group" aria-label="Chọn thứ tự kể chuyện">
-        <p class="story__orders-label">Thử hai cách xếp chuyện:</p>
-        <button class="story-order" type="button" data-order="0" aria-pressed="true">Cách 1 · Theo trình tự</button>
-        <button class="story-order" type="button" data-order="1" aria-pressed="false">Cách 2 · Trận đấu trước</button>
-      </div>
       <nav class="chapter-nav" aria-label="Chọn phần câu chuyện">
-        <button class="chapter-tab" type="button" data-chapter="0" aria-current="step"><span class="chapter-tab__number">01</span><span>Phần đầu</span></button>
-        <button class="chapter-tab" type="button" data-chapter="1"><span class="chapter-tab__number">02</span><span>Nội dung</span></button>
-        <button class="chapter-tab" type="button" data-chapter="2"><span class="chapter-tab__number">03</span><span>Phần cuối</span></button>
+        <button class="chapter-tab" type="button" data-step="0" aria-current="step"><span class="chapter-tab__number">01</span><span>Phần đầu</span></button>
+        <button class="chapter-tab" type="button" data-step="1"><span class="chapter-tab__number">02</span><span>Nội dung</span></button>
+        <button class="chapter-tab" type="button" data-step="2"><span class="chapter-tab__number">03</span><span>Phần cuối</span></button>
       </nav>
       <div class="arrows" aria-label="Điều hướng câu chuyện">
         <button class="arrow-button" id="previous" type="button" aria-label="Đọc phần trước" title="Phần trước" disabled>←</button>
@@ -571,13 +527,8 @@
     const previous = document.querySelector("#previous");
     const next = document.querySelector("#next");
     const chapterNav = document.querySelector(".chapter-nav");
-    const orderButtons = [...document.querySelectorAll(".story-order")];
     const copy = document.querySelector("#story-copy");
-    const orders = [
-      [0, 1, 2],
-      [1, 0, 2]
-    ];
-    let chapterOrder = orders[0];
+    const chapterOrder = [0, 1, 2];
     let currentStep = 0;
 
     function renderTabs() {
@@ -622,13 +573,6 @@
       requestAnimationFrame(() => { copy.style.animation = ""; });
     }
 
-    orderButtons.forEach((button) => button.addEventListener("click", () => {
-      chapterOrder = orders[Number(button.dataset.order)];
-      orderButtons.forEach((orderButton) => {
-        orderButton.setAttribute("aria-pressed", String(orderButton === button));
-      });
-      showChapter(0);
-    }));
     chapterNav.addEventListener("click", (event) => {
       const tab = event.target.closest(".chapter-tab");
       if (tab) showChapter(Number(tab.dataset.step));
